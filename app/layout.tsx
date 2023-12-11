@@ -1,12 +1,17 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+import { ClerkProvider } from '@clerk/nextjs'
+
+// local imports
+import { ModalProvider } from '@/providers/modal-provider'
 import './globals.css'
+import { ToasterProvider } from '@/providers/toast-provider'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Admin dashboard',
-  description: 'Dashboard',
+  title: 'Panel de administrador',
+  description: 'Administra tu tienda',
 }
 
 export default function RootLayout({
@@ -14,9 +19,16 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
-    </html>
+    <ClerkProvider>
+      <html lang="en">
+        <body className={inter.className}>
+          <ToasterProvider />
+          <ModalProvider />
+          {children}
+        </body>
+      </html>
+    </ClerkProvider>
   )
 }
