@@ -4,6 +4,8 @@ import { Copy, Edit, MoreHorizontal, Trash } from "lucide-react";
 import toast from "react-hot-toast";
 import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
+import axios from "axios";
+
 
 import {
     DropdownMenu,
@@ -13,13 +15,12 @@ import {
     DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-
-import { BillboardColumn } from "./columns";
-import axios from "axios";
 import { AlertModal } from "@/components/modals/alert-modal";
 
+import { CategoryColumn } from "./columns";
+
 interface CellActionProps {
-    data: BillboardColumn;
+    data: CategoryColumn;
 }
 
 export const CellAction: React.FC<CellActionProps> = ({
@@ -34,18 +35,18 @@ export const CellAction: React.FC<CellActionProps> = ({
 
     const onCopy = (id: string) => {
         navigator.clipboard.writeText(id);
-        toast.success("ID de cartelera copiada al portapapeles.")
+        toast.success("ID de categoría copiada al portapapeles.")
     }
 
     const onDelete = async () => {
         try {
             setLoading(true);
-            await axios.delete(`/api/${params.storeId}/carteleras/${data.id}`);
+            await axios.delete(`/api/${params.storeId}/categorias/${data.id}`);
             router.refresh(); // Refresh the component so it refetches the patched data.
-            toast.success("Cartelera eliminada.");
+            toast.success("Categoría eliminada.");
             router.refresh();
         } catch (error) {
-            toast.error("Asegúrate de haber removido primero todas las categorías que usen esta cartelera.")
+            toast.error("Asegúrate de haber removido primero todos los productos que usen esta categoría.")
         } finally {
             setLoading(false);
             setOpen(false);
@@ -72,7 +73,7 @@ export const CellAction: React.FC<CellActionProps> = ({
                         <Copy className="mr-2 h-4 w-4" />
                         Copiar ID
                     </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => router.push(`/${params.storeId}/carteleras/${data.id}`)}>
+                    <DropdownMenuItem onClick={() => router.push(`/${params.storeId}/categorias/${data.id}`)}>
                         <Edit className="mr-2 h-4 w-4" />
                         Editar
                     </DropdownMenuItem>

@@ -9,13 +9,13 @@ import { Separator } from "@/components/ui/separator";
 import { DataTable } from "@/components/ui/data-table";
 import { Apilist } from "@/components/ui/api-list";
 
-import { BillboardColumn, columns } from "./columns";
+import { CategoryColumn, columns } from "./columns";
 
-interface BillboardClientProps {
-    data: BillboardColumn[]
+interface CategoryClientProps {
+    data: CategoryColumn[]
 }
 
-export const BillboardClient: React.FC<BillboardClientProps> = ({
+export const CategoryClient: React.FC<CategoryClientProps> = ({
     data
 }) => {
 
@@ -26,20 +26,20 @@ export const BillboardClient: React.FC<BillboardClientProps> = ({
         <>
             <div className="flex items-center justify-between">
                 <Heading
-                    title={`Carteleras (${data.length})`}
-                    description="Administra las carteleras de tu tienda"
+                    title={`Categorías (${data.length})`}
+                    description="Administra las categorías de tu tienda"
                 />
-                <Button onClick={() => { router.push(`/${params.storeId}/carteleras/nueva`) }}>
+                <Button onClick={() => { router.push(`/${params.storeId}/categorias/nueva`) }}>
                     <Plus className="mr-2 h-4 w-4" />
-                    Nueva cartelera
+                    Nueva categoría
                 </Button>
             </div>
             <Separator />
-            <DataTable filterKey="label" columns={columns} data={data} />
+            <DataTable filterKey="name" columns={columns} data={data} />
 
-            <Heading title="API" description="Llamadas de API para las carteleras" />
+            <Heading title="API" description="Llamadas de API para las categorías" />
             <Separator />
-            <Apilist entityName="carteleras" entityIdName="billboardId" />
+            <Apilist entityName="categorias" entityIdName="categoryId" />
         </>
     )
 }

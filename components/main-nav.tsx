@@ -26,6 +26,31 @@ export function MainNav({
             active: pathname === `/${params.storeId}/carteleras`,
         },
         {
+            href: `/${params.storeId}/categorias`,
+            label: 'Categorías',
+            active: pathname === `/${params.storeId}/categorias`,
+        },
+        {
+            href: `/${params.storeId}/talles`,
+            label: 'Talles',
+            active: pathname === `/${params.storeId}/talles`,
+        },
+        {
+            href: `/${params.storeId}/colores`,
+            label: 'Colores',
+            active: pathname === `/${params.storeId}/colores`,
+        },
+        {
+            href: `/${params.storeId}/productos`,
+            label: 'Productos',
+            active: pathname === `/${params.storeId}/productos`,
+        },
+        {
+            href: `/${params.storeId}/ordenes`,
+            label: 'Ordenes',
+            active: pathname === `/${params.storeId}/ordenes`,
+        },
+        {
             href: `/${params.storeId}/configuraciones`,
             label: 'Configuraciones',
             active: pathname === `/${params.storeId}/configuraciones`,

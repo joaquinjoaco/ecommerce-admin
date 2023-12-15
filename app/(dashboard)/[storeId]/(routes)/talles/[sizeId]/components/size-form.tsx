@@ -1,6 +1,6 @@
 "use client";
 
-import { Billboard } from "@prisma/client";
+import { Size } from "@prisma/client";
 import * as z from "zod";
 import { Trash } from "lucide-react";
 import { useForm } from "react-hook-form";
@@ -23,22 +23,21 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { AlertModal } from "@/components/modals/alert-modal";
-import ImageUpload from "@/components/ui/image-upload";
 
 const formSchema = z.object({
-    label: z.string().min(1, { message: 'El nombre de la cartelera debe tener al menos 1 caracter' }),
-    imageUrl: z.string().min(1, { message: 'La cartelera debe tener una imagen de fondo' })
+    name: z.string().min(1, { message: 'El nombre del talle debe tener al menos 1 caracter' }),
+    value: z.string().min(1, { message: 'El valor del talle debe tener al menos 1 caracter' })
 });
 
-type BillboardFormValues = z.infer<typeof formSchema>;
+type SizeFormValues = z.infer<typeof formSchema>;
 
-interface BillboardFormProps {
-    initialData: Billboard | null;
+interface SizeFormProps {
+    initialData: Size | null;
 }
 
 
 
-export const BillboardForm: React.FC<BillboardFormProps> = ({
+export const SizeForm: React.FC<SizeFormProps> = ({
     initialData
 }) => {
 
@@ -48,34 +47,32 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(false);
 
-    const title = initialData ? "Editar cartelera" : "Crear cartelera";
-    const description = initialData ? "Editar imagen y nombre de la cartelera" : "Crear una cartelera";
-    const toastMessage = initialData ? "Cartelera actualizada." : "Cartelera creada";
+    const title = initialData ? "Editar talle" : "Crear talle";
+    const description = initialData ? "Editar nombre y valor" : "Crear un talle";
+    const toastMessage = initialData ? "Talle actualizado." : "Talle creado";
     const action = initialData ? "Guardar cambios" : "Crear";
 
-    const form = useForm<BillboardFormValues>({
+    const form = useForm<SizeFormValues>({
         resolver: zodResolver(formSchema),
         defaultValues: initialData || {
-            label: '',
-            imageUrl: ''
+            name: '',
+            value: ''
         }
     });
 
-    const onSubmit = async (data: BillboardFormValues) => {
+    const onSubmit = async (data: SizeFormValues) => {
         try {
             setLoading(true);
             if (initialData) {
-                // Update the billboard.
-                await axios.patch(`/api/${params.storeId}/carteleras/${params.billboardId}`, data);
+                // Update the size.
+                await axios.patch(`/api/${params.storeId}/talles/${params.sizeId}`, data);
             } else {
-                // Create the billboard.
-                await axios.post(`/api/${params.storeId}/carteleras`, data);
-
+                // Create the size.
+                await axios.post(`/api/${params.storeId}/talles`, data);
             }
-            router.push(`/${params.storeId}/carteleras`);
+            router.push(`/${params.storeId}/talles`);
             router.refresh(); // Refresh the component so it refetches the patched data.
             toast.success(toastMessage);
-
         } catch (error) {
             toast.error("Ocurrió un error inesperado.");
         } finally {
@@ -86,13 +83,13 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
     const onDelete = async () => {
         try {
             setLoading(true);
-            await axios.delete(`/api/${params.storeId}/carteleras/${params.billboardId}`);
-            router.push(`/${params.storeId}/carteleras`);
+            await axios.delete(`/api/${params.storeId}/talles/${params.sizeId}`);
+            router.push(`/${params.storeId}/talles`);
             router.refresh(); // Refresh the component so it refetches the patched data.
-            toast.success("Cartelera eliminada.");
+            toast.success("Talle eliminado.");
 
         } catch (error) {
-            toast.error("Asegúrate de haber removido primero todas las categorías que usen esta cartelera.")
+            toast.error("Asegúrate de haber removido primero todos los productos que usen este talle.")
         } finally {
             setLoading(false);
             setOpen(false);
@@ -131,35 +128,30 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
 
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 w-full">
-
-                    <FormField
-                        control={form.control}
-                        name="imageUrl"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Imagen de fondo</FormLabel>
-                                <FormControl>
-                                    <ImageUpload
-                                        value={field.value ? [field.value] : []}
-                                        disabled={loading}
-                                        onChange={(url) => field.onChange(url)}
-                                        onRemove={() => field.onChange("")}
-                                    />
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
                     <div className="grid grid-cols-3 gap-8">
-                        {/* Billboard name */}
+                        {/* Size name */}
                         <FormField
                             control={form.control}
-                            name="label"
+                            name="name"
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>Nombre</FormLabel>
                                     <FormControl>
-                                        <Input disabled={loading} placeholder="Nombre de la cartelera" {...field} />
+                                        <Input disabled={loading} placeholder="Nombre del talle" {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        {/* Size value */}
+                        <FormField
+                            control={form.control}
+                            name="value"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Valor</FormLabel>
+                                    <FormControl>
+                                        <Input disabled={loading} placeholder="Valor del talle" {...field} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>

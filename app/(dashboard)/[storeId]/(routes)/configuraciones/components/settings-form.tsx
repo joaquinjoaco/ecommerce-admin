@@ -32,7 +32,7 @@ interface SettingsFormProps {
 }
 
 const formSchema = z.object({
-    name: z.string().min(1),
+    name: z.string().min(1, { message: 'El nombre de la tienda debe tener al menos 1 caracter' }),
 });
 
 type SettingsFormValues = z.infer<typeof formSchema>;
