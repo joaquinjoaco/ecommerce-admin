@@ -26,7 +26,7 @@ import { AlertModal } from "@/components/modals/alert-modal";
 
 const formSchema = z.object({
     name: z.string().min(1, { message: 'El nombre del color debe tener al menos 1 caracter' }),
-    value: z.string().min(4, { message: 'El nombre del color debe tener al menos 4 caracteres' }).regex(/^#/, { message: 'El valor debe expresarse en código hexadecimal (ej. #FFFFFF)' })
+    value: z.string().min(4, { message: 'El nombre del color debe tener al menos 4 caracteres (ej. #FFCC00)' }).regex(/^#/, { message: 'El valor debe expresarse en código hexadecimal (ej. #FFFFFF)' })
 });
 
 type ColorFormValues = z.infer<typeof formSchema>;
