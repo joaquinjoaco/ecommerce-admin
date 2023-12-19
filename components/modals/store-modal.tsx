@@ -69,7 +69,7 @@ export const StoreModal = () => {
                                             {/* We spread 'field' to gain access to all its props */}
                                             <Input
                                                 disabled={loading}
-                                                placeholder="SbortBolis"
+                                                placeholder="TechPolis..."
                                                 {...field}
                                             />
                                         </FormControl>
