@@ -41,23 +41,23 @@ export const OrderModal: React.FC<OrderModalProps> = ({
                 <p className={`text-sm px-2 py-1 ${data.isPaid ? "text-green-600" : "text-red-600"}`}>{data.isPaid ? "Paga" : "No paga"}</p>
             </div>
             <div className="flex flex-col mb-4">
-                <p className="text-sm">Fecha</p>
+                <p className="text-sm font-semibold">Fecha</p>
                 <p>{data.createdAt}</p>
             </div>
             <div className="flex flex-col mb-4">
-                <p className="text-sm">Teléfono</p>
+                <p className="text-sm font-semibold">Teléfono</p>
                 <p>{data.phone}</p>
             </div>
             <div className="flex flex-col mb-4">
-                <p className="text-sm">Dirección</p>
+                <p className="text-sm font-semibold">Dirección</p>
                 <p>{data.address}</p>
             </div>
             <div className="flex flex-col mb-4">
-                <p className="text-sm">Producto(s)</p>
+                <p className="text-sm font-semibold">Producto(s)</p>
                 <p>{data.products}</p>
             </div>
             <div className="flex flex-col mb-4">
-                <p className="text-sm">Total</p>
+                <p className="text-sm font-semibold">Total</p>
                 <p>{data.totalPrice}</p>
             </div>
             <div className="pt-6 space-x-2 flex items-center justify-end w-full">

@@ -39,7 +39,7 @@ export async function PATCH(
         const { userId } = auth();
         const body = await req.json();
 
-        const { label, imageUrl } = body;
+        const { label, imageUrl, isNameHidden } = body;
 
 
         if (!userId) {
@@ -78,7 +78,8 @@ export async function PATCH(
             },
             data: {
                 label,
-                imageUrl
+                imageUrl,
+                isNameHidden
             }
         });
 

@@ -13,7 +13,7 @@ export async function POST(
         const { userId } = auth();
         const body = await req.json();
 
-        const { label, imageUrl } = body;
+        const { label, imageUrl, isNameHidden } = body;
 
         // Check for the userId.
         if (!userId) {
@@ -53,6 +53,7 @@ export async function POST(
             data: {
                 label,
                 imageUrl,
+                isNameHidden,
                 storeId: params.storeId
             }
         });

@@ -59,16 +59,6 @@ export async function POST(
             return new NextResponse("Size ID is required", { status: 400 });
         }
 
-        // // Check for isFeatured.
-        // if (!isFeatured) {
-        //     return new NextResponse("isFeatured is required", { status: 400 });
-        // }
-
-        // // Check for isArchived.
-        // if (!isArchived) {
-        //     return new NextResponse("isArchived is required", { status: 400 });
-        // }
-
         // Check for the storeId
         if (!params.storeId) {
             return new NextResponse("Store ID is required", { status: 400 });

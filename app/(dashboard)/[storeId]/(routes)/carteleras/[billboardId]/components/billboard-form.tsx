@@ -16,6 +16,7 @@ import { Separator } from "@/components/ui/separator";
 import {
     Form,
     FormControl,
+    FormDescription,
     FormField,
     FormItem,
     FormLabel,
@@ -24,10 +25,12 @@ import {
 import { Input } from "@/components/ui/input";
 import { AlertModal } from "@/components/modals/alert-modal";
 import ImageUpload from "@/components/ui/image-upload";
+import { Checkbox } from "@/components/ui/checkbox";
 
 const formSchema = z.object({
     label: z.string().min(1, { message: 'El nombre de la cartelera debe tener al menos 1 caracter' }),
-    imageUrl: z.string().min(1, { message: 'La cartelera debe tener una imagen de fondo' })
+    imageUrl: z.string().min(1, { message: 'La cartelera debe tener una imagen de fondo' }),
+    isNameHidden: z.boolean().default(true).optional(),
 });
 
 type BillboardFormValues = z.infer<typeof formSchema>;
@@ -35,8 +38,6 @@ type BillboardFormValues = z.infer<typeof formSchema>;
 interface BillboardFormProps {
     initialData: Billboard | null;
 }
-
-
 
 export const BillboardForm: React.FC<BillboardFormProps> = ({
     initialData
@@ -57,7 +58,8 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
         resolver: zodResolver(formSchema),
         defaultValues: initialData || {
             label: '',
-            imageUrl: ''
+            imageUrl: '',
+            isNameHidden: true,
         }
     });
 
@@ -157,11 +159,34 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
                             name="label"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Nombre (&quot;&&quot; para ocultar)</FormLabel>
+                                    <FormLabel>Nombre</FormLabel>
                                     <FormControl>
                                         <Input disabled={loading} placeholder="Nombre de la cartelera" {...field} />
                                     </FormControl>
                                     <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        {/* Billboard isNameDisplayed */}
+                        <FormField
+                            control={form.control}
+                            name="isNameHidden"
+                            render={({ field }) => (
+                                <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
+                                    <FormControl>
+                                        <Checkbox
+                                            checked={field.value}
+                                            onCheckedChange={field.onChange}
+                                        />
+                                    </FormControl>
+                                    <div className="space-y-1 leading-none">
+                                        <FormLabel>
+                                            Ocultar nombre
+                                        </FormLabel>
+                                        <FormDescription>
+                                            Se ocultará el nombre dado a la cartelera cuando se muestre en la tienda.
+                                        </FormDescription>
+                                    </div>
                                 </FormItem>
                             )}
                         />

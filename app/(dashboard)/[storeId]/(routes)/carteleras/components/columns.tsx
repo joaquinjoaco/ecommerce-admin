@@ -6,6 +6,7 @@ import { CellAction } from "./cell-actions"
 export type BillboardColumn = {
     id: string
     label: string
+    isNameHidden: boolean
     createdAt: string
 }
 
@@ -17,6 +18,10 @@ export const columns: ColumnDef<BillboardColumn>[] = [
     {
         accessorKey: "createdAt",
         header: "Fecha",
+    },
+    {
+        accessorKey: "isNameHidden",
+        header: "Nombre oculto",
     },
     {
         id: "actions",
