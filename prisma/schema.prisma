@@ -69,6 +69,8 @@ model Product {
   OrderItem  OrderItem[]
   createdAt  DateTime    @default(now())
   updatedAt  DateTime    @updatedAt
+  // Add AMOUNT for this product
+  // amount Int
 
   @@index([storeId])
   @@index([categoryId])
@@ -114,15 +116,40 @@ model Image {
 }
 
 model Order {
-  id         String      @id @default(uuid())
-  storeId    String
-  store      Store       @relation("StoreToOrder", fields: [storeId], references: [id])
-  orderItems OrderItem[]
-  isPaid     Boolean     @default(false)
-  phone      String      @default("")
-  address    String      @default("")
-  createdAt  DateTime    @default(now())
-  updatedAt  DateTime    @updatedAt
+  id                        String      @id @default(uuid())
+  storeId                   String
+  store                     Store       @relation("StoreToOrder", fields: [storeId], references: [id])
+  orderItems                OrderItem[]
+  isPaid                    Boolean     @default(false)
+  // client info
+  firstName                 String      @default("")
+  lastName                  String      @default("")
+  cedula                    String      @default("")
+  address1                  String      @default("")
+  address2                  String      @default("")
+  postalcode                String      @default("")
+  departamento              String      @default("")
+  city                      String      @default("")
+  phone                     String      @default("")
+  email                     String      @default("")
+  notes                     String      @default("")
+  deliveryMethod            Int         @default(0)
+  deliveryMethodName        String      @default("")
+  deliveryMethodShopAddress String      @default("")
+  deliveryMethodCost        Int         @default(0)
+  deliveryAddress1          String      @default("")
+  deliveryAddress2          String      @default("")
+  deliveryCedula            String      @default("")
+  deliveryCity              String      @default("")
+  deliveryLastname          String      @default("")
+  deliveryName              String      @default("")
+  deliveryPhone             String      @default("")
+  deliveryPostalcode        String      @default("")
+  pickupCedula              String      @default("")
+  pickupFullName            String      @default("")
+  TandC                     Boolean     @default(false)
+  createdAt                 DateTime    @default(now())
+  updatedAt                 DateTime    @updatedAt
 
   @@index([storeId])
 }
