@@ -21,7 +21,12 @@ export const getTotalRevenue = async (storeId: string) => {
             return orderSum + item.product.price.toNumber();
         }, 0)
         return total + orderTotal;
-    }, 0)
+    }, 0);
+
+    // REPLACE ABOVE WITH THIS ONE WHEN MP INTEGRATION IS FINISHED.
+    // const totalRevenue = paidOrders.reduce((total, order) => {
+    //     return total + Number(order.totalPrice)
+    // }, 0);
 
     return totalRevenue;
 }

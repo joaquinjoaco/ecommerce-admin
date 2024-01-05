@@ -27,16 +27,52 @@ const OrdersPage = async ({
         }
     });
 
-    const formattedOrders: OrderColumn[] = orders.map((item) => ({
-        id: item.id,
-        phone: item.phone,
-        address: "placeholder",
-        products: item.orderItems.map((orderItem) => orderItem.product.name).join(', '),
-        totalPrice: formatter.format(item.orderItems.reduce((total, item) => {
-            return total + Number(item.product.price)
-        }, 0)),
-        isPaid: item.isPaid,
-        createdAt: format(item.createdAt, "MMMM do, yyyy")
+    const formattedOrders: OrderColumn[] = orders.map((order) => ({
+        id: order.id,
+        firstName: order.firstName,
+        lastName: order.lastName,
+        cedula: order.cedula,
+        address1: order.address1,
+        address2: order.address2,
+        postalcode: order.postalcode,
+        departamento: order.departamento,
+        city: order.city,
+        phone: order.phone,
+        email: order.email,
+        notes: order.notes,
+
+        deliveryMethod: order.deliveryMethod,
+        deliveryMethodName: order.deliveryMethodName,
+        deliveryMethodShopAddress: order.deliveryMethodShopAddress,
+        deliveryMethodCost: formatter.format(Number(order.deliveryMethodCost)),
+
+        deliveryAddress1: order.deliveryAddress1,
+        deliveryAddress2: order.deliveryAddress2,
+        deliveryCedula: order.deliveryCedula,
+        deliveryCity: order.deliveryCity,
+        deliveryDepartamento: order.deliveryDepartamento,
+        deliveryLastname: order.deliveryLastname,
+        deliveryName: order.deliveryName,
+        deliveryPhone: order.deliveryPhone,
+        deliveryPostalcode: order.deliveryPostalcode,
+
+        pickupCedula: order.pickupCedula,
+        pickupFullName: order.pickupFullName,
+
+        products: order.orderItems.map((orderItem) => orderItem.product.name).join(', '),
+
+        totalPrice: formatter.format(Number(order.totalPrice)),
+        isPaid: order.isPaid,
+        pago: order.isPaid ? "Pago" : "Impago",
+        TandC: order.TandC,
+        createdAt: format(order.createdAt, "MMMM do, yyyy"),
+        // totalPrice: formatter.format(order.orderItems.reduce((total, item) => {
+        //     return total + Number(item.product.price)
+        // }, 0)),
+        // concatenatedAddress: order.differentAddress ?
+        //     order.deliveryAddress1 + " " + order.deliveryAddress2 + ", " + order.deliveryCity + ", " + order.deliveryDepartamento
+        //     :
+        //     order.address1 + " " + order.address2 + ", " + order.city + ", " + order.departamento,
     }));
 
     return (

@@ -45,12 +45,45 @@ export async function POST(
                             id: productId
                         }
                     }
+                    // over here we may be able to manage product quantity :)
                 }))
             },
+
             isPaid: false,
+
             firstName: orderData.firstName,
+            lastName: orderData.lastName,
+            cedula: orderData.cedula,
+            address1: orderData.address1,
+            address2: orderData.address2,
+            postalcode: orderData.postalcode,
+            city: orderData.city,
+            departamento: orderData.departamento,
+            phone: orderData.phone,
+            email: orderData.email,
 
+            deliveryMethod: orderData.deliveryMethod,
+            deliveryMethodCost: orderData.deliveryMethodCost,
+            deliveryMethodName: orderData.deliveryMethodName,
+            deliveryMethodShopAddress: orderData.deliveryMethodShopAddress,
 
+            deliveryCedula: orderData.deliveryCedula,
+            deliveryName: orderData.deliveryName,
+            deliveryLastname: orderData.deliveryLastname,
+            deliveryAddress1: orderData.deliveryAddress1,
+            deliveryAddress2: orderData.deliveryAddress2,
+            deliveryPostalcode: orderData.deliveryPostalcode,
+            deliveryCity: orderData.deliveryCity,
+            deliveryDepartamento: orderData.deliveryDepartamento,
+            deliveryPhone: orderData.deliveryPhone,
+
+            pickupCedula: orderData.pickupCedula,
+            pickupFullName: orderData.pickupFullName,
+
+            notes: orderData.notes,
+            TandC: orderData.TandC,
+            differentAddress: orderData.differentAddress,
+            totalPrice: orderData.totalPrice,
         },
     });
 

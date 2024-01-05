@@ -37,8 +37,8 @@ export const OrderModal: React.FC<OrderModalProps> = ({
             isOpen={isOpen}
             onClose={onClose}
         >
-            <div className={`inline-block mb-4 rounded-full ${data.isPaid ? " bg-green-300 " : " bg-red-300 "}`}>
-                <p className={`text-sm px-2 py-1 ${data.isPaid ? "text-green-600" : "text-red-600"}`}>{data.isPaid ? "Paga" : "No paga"}</p>
+            <div className={`inline-block mb-4 rounded-full ${data.isPaid ? " bg-green-200 " : " bg-red-200 "}`}>
+                <p className={`text-sm px-2 py-1 ${data.isPaid ? "text-green-500" : "text-red-500"}`}>{data.isPaid ? "Paga" : "Impaga"}</p>
             </div>
             <div className="flex flex-col mb-4">
                 <p className="text-sm font-semibold">Fecha</p>
@@ -50,15 +50,20 @@ export const OrderModal: React.FC<OrderModalProps> = ({
             </div>
             <div className="flex flex-col mb-4">
                 <p className="text-sm font-semibold">Dirección</p>
-                <p>{data.address}</p>
+                <p>{data.address1}</p>
+                <p>{data.address2}</p>
             </div>
             <div className="flex flex-col mb-4">
                 <p className="text-sm font-semibold">Producto(s)</p>
-                <p>{data.products}</p>
+                {data.products.split(",").map((product) => (
+                    <p className="text-sm px-2 py-1">{product}</p>
+                ))}
+
+
             </div>
             <div className="flex flex-col mb-4">
                 <p className="text-sm font-semibold">Total</p>
-                <p>{data.totalPrice}</p>
+                <p className="text-lg font-bold">{data.totalPrice}</p>
             </div>
             <div className="pt-6 space-x-2 flex items-center justify-end w-full">
                 <Button variant="outline" onClick={onClose}>
