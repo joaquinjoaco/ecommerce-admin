@@ -55,8 +55,8 @@ export const OrderModal: React.FC<OrderModalProps> = ({
             </div>
             <div className="flex flex-col mb-4">
                 <p className="text-sm font-semibold">Producto(s)</p>
-                {data.products.split(",").map((product) => (
-                    <p className="text-sm px-2 py-1">{product}</p>
+                {data.products.split(",").map((product, idx) => (
+                    <p key={idx} className="text-sm px-2 py-1">{product}</p>
                 ))}
 
 
