@@ -2,7 +2,6 @@
 
 import { ColumnDef } from "@tanstack/react-table"
 import { CellAction } from "./cell-actions";
-import { OrderItem } from "@prisma/client";
 
 export type OrderColumn = {
     id: string;
