@@ -115,9 +115,9 @@ export async function POST(
             currency_id: "UYU",
         })),
         back_urls: {
-            success: `${process.env.FRONTEND_STORE_URL}/carrito?success=1&orderId=${order.id}`,
-            failure: `${process.env.FRONTEND_STORE_URL}/carrito?failure=1&orderId=${order.id}`,
-            pending: `${process.env.FRONTEND_STORE_URL}/carrito?pending=1&orderId=${order.id}`,
+            success: `${process.env.FRONTEND_STORE_URL}/carrito?success=1&order_id=${order.id}`,
+            failure: `${process.env.FRONTEND_STORE_URL}/carrito?failure=1&order_id=${order.id}`,
+            pending: `${process.env.FRONTEND_STORE_URL}/carrito?pending=1&order_id=${order.id}`,
         },
         auto_return: "approved",
     }
