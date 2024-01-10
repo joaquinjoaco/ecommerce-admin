@@ -1,7 +1,5 @@
-// import Stripe from "stripe";
 import { NextResponse } from "next/server";
-
-// import { stripe } from "@/lib/stripe";
+import { MercadoPagoConfig, Preference } from "mercadopago";
 import prismadb from "@/lib/prismadb";
 
 
@@ -11,6 +9,10 @@ const corsHeaders = {
     "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
     "Access-Control-Allow-Headers": "Content-Type, Authorization,",
 };
+
+const client = new MercadoPagoConfig({
+    accessToken: `${process.env.MP_ACCESS_TOKEN}`,
+})
 
 export async function OPTIONS() {
     return NextResponse.json({}, { headers: corsHeaders });
@@ -87,10 +89,46 @@ export async function POST(
         },
     });
 
-    console.log(orderData);
+    // If the user chose to pay delivery, it will be added as an item.
+    if (order.deliveryMethod === 1) {
+        products.push({
+            id: "delivery",
+            storeId: params.storeId,
+            categoryId: "",
+            name: "Envío 24-48hs",
+            price: orderData.deliveryMethodCost,
+            isFeatured: false,
+            isArchived: false,
+            sizeId: "",
+            colorId: "",
+            createdAt: new Date(),
+            updatedAt: new Date(),
+        })
+    }
+
+    const body = {
+        items: products.map((product) => ({
+            id: product.id,
+            title: product.name,
+            quantity: 1,
+            unit_price: Number(product.price),
+            currency_id: "UYU",
+        })),
+        back_urls: {
+            success: `${process.env.FRONTEND_STORE_URL}/carrito?success=1&orderId=${order.id}`,
+            failure: `${process.env.FRONTEND_STORE_URL}/carrito?failure=1&orderId=${order.id}`,
+            pending: `${process.env.FRONTEND_STORE_URL}/carrito?pending=1&orderId=${order.id}`,
+        },
+        auto_return: "approved",
+    }
+
+    const preference = new Preference(client);
+
+    const result = await preference.create({ body });
 
     return NextResponse.json(
-        { url: `${process.env.FRONTEND_STORE_URL}/carrito?success=1` },
+        // { url: `${process.env.FRONTEND_STORE_URL}/carrito?success=1` },
+        { id: result.id },
         { headers: corsHeaders }
     );
 }
