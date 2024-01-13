@@ -1,7 +1,7 @@
 "use client";
 
 import { useParams, useRouter } from "next/navigation";
-import { ArrowLeft, Divide } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { Color, Order, OrderItem, Product, Size } from "@prisma/client";
 
 import { Button } from "@/components/ui/button";
@@ -34,6 +34,7 @@ const OrderView: React.FC<OrderViewProps> = ({
                         <Heading
                             title={"Detalles de la orden"}
                             description={`ID: ${data?.id}`}
+                            description2={`Email ID: ${data.sentEmail}`}
                         />
                         :
                         <Heading

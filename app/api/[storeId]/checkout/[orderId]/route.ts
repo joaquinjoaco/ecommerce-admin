@@ -10,7 +10,7 @@ const corsHeaders = {
     "Access-Control-Allow-Headers": "Content-Type, Authorization,",
 };
 
-const resend = new Resend('re_ZdaxF8DY_LufiJq6Ki6f4YNn6zBVTkszD');
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function OPTIONS() {
     return NextResponse.json({}, { headers: corsHeaders });
@@ -30,15 +30,6 @@ export async function POST(
                 isPaid: true,
             },
             include: {
-                orderItems: true,
-            }
-        });
-
-        const fetchedOrder = await prismadb.order.findUnique({
-            where: {
-                id: params.orderId
-            },
-            include: {
                 orderItems: {
                     include: {
                         product: {
@@ -50,17 +41,35 @@ export async function POST(
                     }
                 }
             }
-        })
-
-        const products = fetchedOrder?.orderItems ? fetchedOrder.orderItems.map((orderItem) => orderItem.product) : [];
-
-        const sentEmail = await resend.emails.send({
-            from: 'onboarding@resend.dev',
-            to: [order.email],
-            subject: "Hello from eventyr",
-            react: EmailTemplate({ firstName: order.firstName, items: products }),
-            text: ''
         });
+
+        // Sends an email to the user if we haven't sent them one already.
+        // This prevents multiple emails if the user reloads the page.
+        if (order.sentEmail == "") {
+            const products = order?.orderItems ? order.orderItems.map((orderItem) => orderItem.product) : [];
+            const sentEmail = await resend.emails.send({
+                from: 'onboarding@resend.dev',
+                to: [order.email],
+                subject: "Tu compra en SportPolis",
+                react: EmailTemplate({
+                    order: order,
+                    items: products,
+                }),
+                text: ''
+            });
+
+            // Update the order with the sent email id.
+            await prismadb.order.update({
+                where: {
+                    id: params.orderId,
+                },
+                data: {
+                    sentEmail: sentEmail.data?.id,
+                }
+            })
+
+        }
+
 
         return new NextResponse(null, {
             status: 200,

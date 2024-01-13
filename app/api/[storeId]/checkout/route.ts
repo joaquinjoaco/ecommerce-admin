@@ -51,7 +51,9 @@ export async function POST(
                 }))
             },
 
+            // Perhaps use (...orderData, isPaid: false) and that would be it?
             isPaid: false,
+            sentEmail: "",
 
             firstName: orderData.firstName,
             lastName: orderData.lastName,
@@ -85,6 +87,7 @@ export async function POST(
             notes: orderData.notes,
             TandC: orderData.TandC,
             differentAddress: orderData.differentAddress,
+            subtotalPrice: orderData.subtotalPrice,
             totalPrice: orderData.totalPrice,
         },
     });
@@ -125,6 +128,8 @@ export async function POST(
     const preference = new Preference(client);
 
     const result = await preference.create({ body });
+
+    console.log(result.api_response.status.toString);
 
     return NextResponse.json(
         // { url: `${process.env.FRONTEND_STORE_URL}/carrito?success=1` },

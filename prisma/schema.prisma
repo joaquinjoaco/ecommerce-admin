@@ -121,6 +121,7 @@ model Order {
   store                     Store       @relation("StoreToOrder", fields: [storeId], references: [id])
   orderItems                OrderItem[]
   isPaid                    Boolean     @default(false)
+  sentEmail                 String      @default("")
   // client info
   firstName                 String      @default("")
   lastName                  String      @default("")
@@ -150,6 +151,7 @@ model Order {
   pickupFullName            String      @default("")
   TandC                     Boolean     @default(false)
   differentAddress          Boolean     @default(false)
+  subtotalPrice             Decimal     @default(0)
   totalPrice                Decimal     @default(0)
   createdAt                 DateTime    @default(now())
   updatedAt                 DateTime    @updatedAt
