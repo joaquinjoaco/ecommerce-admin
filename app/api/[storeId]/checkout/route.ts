@@ -92,7 +92,7 @@ export async function POST(
         },
     });
 
-    // If the user chose to pay delivery, it will be added as an item.
+    // If the user chose to pay delivery, it will be added as an item for MercadoPago.
     if (order.deliveryMethod === 1) {
         products.push({
             id: "delivery",
@@ -123,16 +123,14 @@ export async function POST(
             pending: `${process.env.FRONTEND_STORE_URL}/carrito?pending=1&order_id=${order.id}`,
         },
         auto_return: "approved",
+        binary_mode: true,
     }
 
     const preference = new Preference(client);
 
     const result = await preference.create({ body });
 
-    console.log(result.api_response.status.toString);
-
     return NextResponse.json(
-        // { url: `${process.env.FRONTEND_STORE_URL}/carrito?success=1` },
         { id: result.id },
         { headers: corsHeaders }
     );
