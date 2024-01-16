@@ -99,6 +99,7 @@ export async function POST(
             storeId: params.storeId,
             categoryId: "",
             name: "Envío 24-48hs",
+            description: "",
             price: orderData.deliveryMethodCost,
             isFeatured: false,
             isArchived: false,

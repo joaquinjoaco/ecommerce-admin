@@ -52,23 +52,24 @@ model Category {
 }
 
 model Product {
-  id         String      @id @default(uuid())
-  storeId    String // Foreign Key to Store
-  store      Store       @relation("StoreToProduct", fields: [storeId], references: [id])
-  categoryId String // Foreign Key to Category
-  category   Category    @relation("CategoryToProduct", fields: [categoryId], references: [id])
-  name       String
-  price      Decimal
-  isFeatured Boolean     @default(false)
-  isArchived Boolean     @default(false)
-  sizeId     String // Foreign Key to Size
-  size       Size        @relation(fields: [sizeId], references: [id])
-  colorId    String // Foreign Key to Color
-  color      Color       @relation(fields: [colorId], references: [id])
-  images     Image[] // Relation to Image model
-  OrderItem  OrderItem[]
-  createdAt  DateTime    @default(now())
-  updatedAt  DateTime    @updatedAt
+  id          String      @id @default(uuid())
+  storeId     String // Foreign Key to Store
+  store       Store       @relation("StoreToProduct", fields: [storeId], references: [id])
+  categoryId  String // Foreign Key to Category
+  category    Category    @relation("CategoryToProduct", fields: [categoryId], references: [id])
+  name        String
+  description String      @db.VarChar(1024)
+  price       Decimal
+  isFeatured  Boolean     @default(false)
+  isArchived  Boolean     @default(false)
+  sizeId      String // Foreign Key to Size
+  size        Size        @relation(fields: [sizeId], references: [id])
+  colorId     String // Foreign Key to Color
+  color       Color       @relation(fields: [colorId], references: [id])
+  images      Image[] // Relation to Image model
+  OrderItem   OrderItem[]
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
   // Add AMOUNT for this product
   // amount Int
 
@@ -123,36 +124,36 @@ model Order {
   isPaid                    Boolean     @default(false)
   sentEmail                 String      @default("")
   // client info
-  firstName                 String      @default("")
-  lastName                  String      @default("")
-  cedula                    String      @default("")
-  address1                  String      @default("")
-  address2                  String      @default("")
-  postalcode                String      @default("")
-  departamento              String      @default("")
-  city                      String      @default("")
-  phone                     String      @default("")
-  email                     String      @default("")
-  notes                     String      @default("")
-  deliveryMethod            Int         @default(0)
-  deliveryMethodName        String      @default("")
-  deliveryMethodShopAddress String      @default("")
-  deliveryMethodCost        Decimal     @default(0)
-  deliveryAddress1          String      @default("")
-  deliveryAddress2          String      @default("")
-  deliveryCedula            String      @default("")
-  deliveryCity              String      @default("")
-  deliveryDepartamento      String      @default("")
-  deliveryLastname          String      @default("")
-  deliveryName              String      @default("")
-  deliveryPhone             String      @default("")
-  deliveryPostalcode        String      @default("")
-  pickupCedula              String      @default("")
-  pickupFullName            String      @default("")
-  TandC                     Boolean     @default(false)
-  differentAddress          Boolean     @default(false)
-  subtotalPrice             Decimal     @default(0)
-  totalPrice                Decimal     @default(0)
+  firstName                 String
+  lastName                  String
+  cedula                    String
+  address1                  String
+  address2                  String
+  postalcode                String
+  departamento              String
+  city                      String
+  phone                     String
+  email                     String
+  notes                     String
+  deliveryMethod            Int
+  deliveryMethodName        String
+  deliveryMethodShopAddress String
+  deliveryMethodCost        Decimal
+  deliveryAddress1          String
+  deliveryAddress2          String
+  deliveryCedula            String
+  deliveryCity              String
+  deliveryDepartamento      String
+  deliveryLastname          String
+  deliveryName              String
+  deliveryPhone             String
+  deliveryPostalcode        String
+  pickupCedula              String
+  pickupFullName            String
+  TandC                     Boolean
+  differentAddress          Boolean
+  subtotalPrice             Decimal
+  totalPrice                Decimal
   createdAt                 DateTime    @default(now())
   updatedAt                 DateTime    @updatedAt
 

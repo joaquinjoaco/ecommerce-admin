@@ -47,6 +47,7 @@ export async function PATCH(
 
         const {
             name,
+            description,
             price,
             categoryId,
             colorId,
@@ -64,6 +65,11 @@ export async function PATCH(
         // Check for the name.
         if (!name) {
             return new NextResponse("Name is required", { status: 400 });
+        }
+
+        // Check for the name.
+        if (!description) {
+            return new NextResponse("Description is required", { status: 400 });
         }
 
         // Check for the images.
@@ -116,6 +122,7 @@ export async function PATCH(
             },
             data: {
                 name,
+                description,
                 price,
                 categoryId,
                 colorId,

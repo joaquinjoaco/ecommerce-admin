@@ -33,14 +33,16 @@ import { Input } from "@/components/ui/input";
 import { AlertModal } from "@/components/modals/alert-modal";
 import ImageUpload from "@/components/ui/image-upload";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Textarea } from "@/components/ui/textarea";
 
 const formSchema = z.object({
     name: z.string().min(1, { message: 'El nombre del producto debe tener al menos 1 caracter' }),
+    description: z.string().min(1, { message: 'La descripción del producto debe tener al menos 1 caracter' }).max(1024, { message: 'La descripción excede el límite de 1024 caracteres' }),
     images: z.object({ url: z.string() }).array(),
-    price: z.coerce.number(), // coerce because we are using a decimal
-    categoryId: z.string().min(1),
-    colorId: z.string().min(1),
-    sizeId: z.string().min(1),
+    price: z.coerce.number().min(1, { message: 'El precio debe ser mayor a 0' }), // coerce because we are using a decimal
+    categoryId: z.string().min(1, { message: 'Debe seleccionar una categoría para el producto' }),
+    colorId: z.string().min(1, { message: 'Debe seleccionar un color para el producto' }),
+    sizeId: z.string().min(1, { message: 'Debe seleccionar un talle para el producto' }),
     isArchived: z.boolean().default(false).optional(),
     isFeatured: z.boolean().default(false).optional(),
 });
@@ -55,8 +57,6 @@ interface ProductFormProps {
     colors: Color[];
     sizes: Size[];
 }
-
-
 
 export const ProductForm: React.FC<ProductFormProps> = ({
     initialData,
@@ -81,6 +81,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
         price: parseFloat(String(initialData?.price)),
     } : {
         name: '',
+        description: '',
         images: [],
         price: 0,
         categoryId: '',
@@ -184,7 +185,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                             </FormItem>
                         )}
                     />
-                    <div className="grid grid-cols-3 gap-8">
+                    <div className="grid grid-cols-2 gap-8">
                         {/* Product name */}
                         <FormField
                             control={form.control}
@@ -205,9 +206,23 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                             name="price"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Precio (USD)</FormLabel>
+                                    <FormLabel>Precio (UYU)</FormLabel>
                                     <FormControl>
                                         <Input type="number" disabled={loading} placeholder="Nombre del price" {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        {/* Product description */}
+                        <FormField
+                            control={form.control}
+                            name="description"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Descripción</FormLabel>
+                                    <FormControl>
+                                        <Textarea disabled={loading} placeholder="Descripción del producto" {...field} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
@@ -345,7 +360,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                                             Destacado
                                         </FormLabel>
                                         <FormDescription>
-                                            El producto aparecerá destacado en la página principal de la.
+                                            El producto aparecerá destacado en la página principal de la tienda.
                                         </FormDescription>
                                     </div>
                                 </FormItem>

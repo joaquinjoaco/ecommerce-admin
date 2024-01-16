@@ -15,6 +15,7 @@ export async function POST(
 
         const {
             name,
+            description,
             price,
             categoryId,
             colorId,
@@ -32,6 +33,11 @@ export async function POST(
         // Check for the name.
         if (!name) {
             return new NextResponse("Name is required", { status: 400 });
+        }
+
+        // Check for the name.
+        if (!description) {
+            return new NextResponse("Description is required", { status: 400 });
         }
 
         // Check for the images.
@@ -81,6 +87,7 @@ export async function POST(
         const product = await prismadb.product.create({
             data: {
                 name,
+                description,
                 price,
                 isFeatured,
                 isArchived,

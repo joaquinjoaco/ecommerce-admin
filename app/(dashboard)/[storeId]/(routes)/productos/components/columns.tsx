@@ -12,6 +12,8 @@ export type ProductColumn = {
     color: string;
     isFeatured: boolean;
     isArchived: boolean;
+    isFeaturedText: string;
+    isArchivedText: string;
     createdAt: string;
 }
 
@@ -21,11 +23,11 @@ export const columns: ColumnDef<ProductColumn>[] = [
         header: "Nombre",
     },
     {
-        accessorKey: "isArchived",
+        accessorKey: "isArchivedText",
         header: "Archivado",
     },
     {
-        accessorKey: "isFeatured",
+        accessorKey: "isFeaturedText",
         header: "Destacado",
     },
     {
