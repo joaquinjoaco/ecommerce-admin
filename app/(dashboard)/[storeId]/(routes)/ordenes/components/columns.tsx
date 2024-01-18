@@ -61,7 +61,7 @@ export const columns: ColumnDef<OrderColumn>[] = [
     },
     {
         accessorKey: "totalPrice",
-        header: "Total (USD)",
+        header: "Total (UYU)",
     },
     {
         accessorKey: "pago",
