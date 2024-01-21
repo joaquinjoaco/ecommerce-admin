@@ -24,7 +24,7 @@ const OrderProduct: React.FC<OrderProductProps> = ({
         <li className="flex justify-between">
             {/* Product */}
             <div className="flex flex-col justify-between">
-                <p className="text-sm font-semibold text-black">
+                <p className="text-sm font-semibold">
                     <span className="cursor-pointer" onClick={() => router.push(`/${params.storeId}/productos/${data.id}`)}> {data.name}</span>
                 </p>
                 <p className="text-sm text-gray-500">

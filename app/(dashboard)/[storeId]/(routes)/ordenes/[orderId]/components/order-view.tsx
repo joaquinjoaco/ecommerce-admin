@@ -44,19 +44,30 @@ const OrderView: React.FC<OrderViewProps> = ({
                     }
 
                     <div className="flex flex-wrap justify-start gap-x-2">
+
                         <div className={`inline-block max-w-min mt-2 rounded-full whitespace-nowrap overflow-hidden ${data?.isPaid ? " bg-green-200 " : " bg-red-200 "}`}>
-                            <p className={`text-sm px-3 py-1 ${data?.isPaid ? "text-green-500" : "text-red-500"}`}>{data?.isPaid ? "Paga" : "Impaga"}</p>
+                            <p className={`text-sm px-3 py-1 ${data?.isPaid ? "text-green-500" : "text-red-500"}`}>
+                                {data?.isPaid ? "Paga" : "Impaga"}
+                            </p>
                         </div>
+
                         <div className={"bg-primary inline-block max-w-min mt-2 rounded-full whitespace-nowrap overflow-hidden"}>
-                            <p className={`text-sm px-3 py-1 text-white`}>{data?.TandC ? "Términos y condiciones aceptados" : "Términos y condiciones no aceptados"}</p>
+                            <p className={"text-sm px-3 py-1 text-white dark:text-[#020817]"}>
+                                {data?.TandC ? "Términos y condiciones aceptados" : "Términos y condiciones no aceptados"}
+                            </p>
                         </div>
+
                         <div className={"bg-primary inline-block max-w-min mt-2 rounded-full whitespace-nowrap overflow-hidden"}>
-                            <p className={`text-sm px-3 py-1 text-white`}>{data?.deliveryMethod === 0 ? "Retira en el local" : "Envío 24-48hs"}</p>
+                            <p className={"text-sm px-3 py-1 text-white dark:text-[#020817]"}>
+                                {data?.deliveryMethod === 0 ? "Retira en el local" : "Envío 24-48hs"}
+                            </p>
                         </div>
+
                         {data?.deliveryMethod === 1 ?
                             <div className={"bg-primary inline-block max-w-min mt-2 rounded-full whitespace-nowrap overflow-hidden"}>
-                                <p className={`text-sm px-3 py-1 text-white`}>{data?.differentAddress ? "Envío a otra dirección" : "Envío a dirección de facturación"}</p>
-                            </div> :
+                                <p className={`text-sm px-3 py-1 text-white dark:text-[#020817]`}>{data?.differentAddress ? "Envío a otra dirección" : "Envío a dirección de facturación"}</p>
+                            </div>
+                            :
                             null
                         }
                     </div>
@@ -91,7 +102,7 @@ const OrderView: React.FC<OrderViewProps> = ({
                             <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
                                 Apellidos
                             </label>
-                            <Input className="text-black" disabled={true} value={data?.lastName} />
+                            <Input disabled={true} value={data?.lastName} />
                         </div>
                     </div>
 
@@ -186,7 +197,7 @@ const OrderView: React.FC<OrderViewProps> = ({
 
                         <div className="mt-6 space-y-4">
                             <div className="flex items-center justify-between border-t py-4 border-gray-200 pt-4">
-                                <div className="text-xl font-bold text-gray-900">
+                                <div className="text-xl font-bold">
                                     Total
                                 </div>
                                 <div className="text-xl font-extrabold">
@@ -194,7 +205,7 @@ const OrderView: React.FC<OrderViewProps> = ({
                                 </div>
                             </div>
                         </div>
-                        <div className="rounded-md space-y-6 bg-gray-50 px-4 py-6 sm:p-6 lg:col-span-5 lg:mt-0 lg:p-8">
+                        <div className="rounded-md space-y-6 bg-gray-50 dark:bg-[#050c1d] px-4 py-6 sm:p-6 lg:col-span-5 lg:mt-0 lg:p-8">
                             {
                                 data?.deliveryMethod === 0 ?
                                     <>
@@ -229,7 +240,7 @@ const OrderView: React.FC<OrderViewProps> = ({
                                                             <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
                                                                 Apellidos
                                                             </label>
-                                                            <Input className="text-black" disabled={true} value={data?.deliveryLastname} />
+                                                            <Input disabled={true} value={data?.deliveryLastname} />
                                                         </div>
                                                     </div>
 
