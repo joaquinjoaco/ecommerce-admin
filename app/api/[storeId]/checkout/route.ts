@@ -47,6 +47,7 @@ export async function POST(
                             id: productId
                         }
                     }
+                    // quantity: product.quantity,
                     // over here we may be able to manage product quantity :)
                 }))
             },
@@ -101,6 +102,7 @@ export async function POST(
             name: "Envío 24-48hs",
             description: "",
             price: orderData.deliveryMethodCost,
+            quantity: 1,
             isFeatured: false,
             isArchived: false,
             sizeId: "",
@@ -114,7 +116,7 @@ export async function POST(
         items: products.map((product) => ({
             id: product.id,
             title: product.name,
-            quantity: 1,
+            quantity: 1, // product.quantity
             unit_price: Number(product.price),
             currency_id: "UYU",
         })),

@@ -17,6 +17,7 @@ export async function POST(
             name,
             description,
             price,
+            quantity,
             categoryId,
             colorId,
             sizeId,
@@ -48,6 +49,11 @@ export async function POST(
         // Check for the Price.
         if (!price) {
             return new NextResponse("Price is required", { status: 400 });
+        }
+
+        // Check for the Quantity.
+        if (!quantity) {
+            return new NextResponse("Quantity is required", { status: 400 });
         }
 
         // Check for the categoryId.
@@ -89,6 +95,7 @@ export async function POST(
                 name,
                 description,
                 price,
+                quantity,
                 isFeatured,
                 isArchived,
                 categoryId,

@@ -60,6 +60,7 @@ model Product {
   name        String
   description String      @db.VarChar(1024)
   price       Decimal
+  quantity    Int         @default(0)
   isFeatured  Boolean     @default(false)
   isArchived  Boolean     @default(false)
   sizeId      String // Foreign Key to Size
@@ -166,6 +167,7 @@ model OrderItem {
   order     Order   @relation(fields: [orderId], references: [id])
   productId String
   product   Product @relation(fields: [productId], references: [id])
+  quantity  Int     @default(0)
 
   @@index([orderId])
   @@index([productId])

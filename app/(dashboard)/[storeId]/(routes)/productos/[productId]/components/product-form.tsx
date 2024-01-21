@@ -40,6 +40,7 @@ const formSchema = z.object({
     description: z.string().min(1, { message: 'La descripción del producto debe tener al menos 1 caracter' }).max(1024, { message: 'La descripción excede el límite de 1024 caracteres' }),
     images: z.object({ url: z.string() }).array(),
     price: z.coerce.number().min(1, { message: 'El precio debe ser mayor a 0' }), // coerce because we are using a decimal
+    quantity: z.coerce.number().min(0, { message: 'La cantidad no puede ser menor a 0' }), // coerce because we are using a decimal
     categoryId: z.string().min(1, { message: 'Debe seleccionar una categoría para el producto' }),
     colorId: z.string().min(1, { message: 'Debe seleccionar un color para el producto' }),
     sizeId: z.string().min(1, { message: 'Debe seleccionar un talle para el producto' }),
@@ -84,6 +85,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
         description: '',
         images: [],
         price: 0,
+        quantity: 0,
         categoryId: '',
         colorId: '',
         sizeId: '',
@@ -208,7 +210,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                                 <FormItem>
                                     <FormLabel>Precio (UYU)</FormLabel>
                                     <FormControl>
-                                        <Input type="number" disabled={loading} placeholder="Nombre del price" {...field} />
+                                        <Input type="number" disabled={loading} placeholder="Precio en pesos uruguayos" {...field} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
@@ -223,6 +225,20 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                                     <FormLabel>Descripción</FormLabel>
                                     <FormControl>
                                         <Textarea disabled={loading} placeholder="Descripción del producto" {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        {/* Product quantity */}
+                        <FormField
+                            control={form.control}
+                            name="quantity"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Cantidad en stock</FormLabel>
+                                    <FormControl>
+                                        <Input type="number" disabled={loading} placeholder="Cantidad" {...field} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>

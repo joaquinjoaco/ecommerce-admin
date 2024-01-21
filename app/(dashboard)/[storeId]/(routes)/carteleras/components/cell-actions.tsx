@@ -17,7 +17,6 @@ import { Button } from "@/components/ui/button";
 import { BillboardColumn } from "./columns";
 import axios from "axios";
 import { AlertModal } from "@/components/modals/alert-modal";
-import { Tooltip, TooltipProvider, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip";
 
 interface CellActionProps {
     data: BillboardColumn;
@@ -56,42 +55,35 @@ export const CellAction: React.FC<CellActionProps> = ({
     return (
         <>
             <AlertModal isOpen={open} onClose={() => setOpen(false)} onConfirm={onDelete} loading={loading} />
-            <TooltipProvider>
-                <Tooltip>
-                    <TooltipTrigger>
-                        <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                                <Button variant="ghost" className="h-8 w-8 p-0">
-                                    {/* accesibility fature, screenreaders only 'open menu' */}
-                                    <span className="sr-only">Abrir menú de acciones</span>
-                                    <MoreHorizontal className="h-4 w-4" />
-                                </Button>
-                            </DropdownMenuTrigger>
 
-                            <DropdownMenuContent align="end">
-                                <DropdownMenuLabel>
-                                    Acciones
-                                </DropdownMenuLabel>
-                                <DropdownMenuItem onClick={() => onCopy(data.id)}>
-                                    <Copy className="mr-2 h-4 w-4" />
-                                    Copiar ID
-                                </DropdownMenuItem>
-                                <DropdownMenuItem onClick={() => router.push(`/${params.storeId}/carteleras/${data.id}`)}>
-                                    <Edit className="mr-2 h-4 w-4" />
-                                    Editar
-                                </DropdownMenuItem>
-                                <DropdownMenuItem onClick={() => setOpen(true)}>
-                                    <Trash className="mr-2 h-4 w-4" />
-                                    Eliminar
-                                </DropdownMenuItem>
-                            </DropdownMenuContent>
-                        </DropdownMenu>
-                    </TooltipTrigger>
-                    <TooltipContent>
-                        <p>Acciones</p>
-                    </TooltipContent>
-                </Tooltip>
-            </TooltipProvider>
+            <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" className="h-8 w-8 p-0">
+                        {/* accesibility fature, screenreaders only 'open menu' */}
+                        <span className="sr-only">Abrir menú de acciones</span>
+                        <MoreHorizontal className="h-4 w-4" />
+                    </Button>
+                </DropdownMenuTrigger>
+
+                <DropdownMenuContent align="end">
+                    <DropdownMenuLabel>
+                        Acciones
+                    </DropdownMenuLabel>
+                    <DropdownMenuItem onClick={() => onCopy(data.id)}>
+                        <Copy className="mr-2 h-4 w-4" />
+                        Copiar ID
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => router.push(`/${params.storeId}/carteleras/${data.id}`)}>
+                        <Edit className="mr-2 h-4 w-4" />
+                        Editar
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => setOpen(true)}>
+                        <Trash className="mr-2 h-4 w-4" />
+                        Eliminar
+                    </DropdownMenuItem>
+                </DropdownMenuContent>
+            </DropdownMenu>
+
         </>
     );
 };
