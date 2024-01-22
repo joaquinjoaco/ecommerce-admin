@@ -36,9 +36,17 @@ export async function POST(
             { headers: paymentHeaders }
         );
 
+        // Declare 'orderCheck' to prevent repeteadly decrementing item stock on browser reloads.
+        const orderCheck = await prismadb.order.findUnique({
+            where: {
+                id: params.orderId
+            }
+        });
+
         // If the payment status from MercadoPago is approved 
         // the order will be updated and an email will be sent to the user.
         if (payment.data.status === "approved") {
+
             const order = await prismadb.order.update({
                 where: {
                     // Mark the order as paid
@@ -60,6 +68,29 @@ export async function POST(
                     }
                 }
             });
+
+
+            // Update the stock, substracting the corresponding amounts to each product.
+            if (orderCheck?.isPaid === false) {
+                // Thank you ChatGPT for this one.
+                const productUpdates = order.orderItems.map(async (orderItem) => {
+                    const updatedProduct = await prismadb.product.update({
+                        where: {
+                            id: orderItem.productId,
+                        },
+                        data: {
+                            quantity: {
+                                decrement: orderItem.quantity,
+                            },
+                        },
+                    });
+
+                    return updatedProduct;
+                });
+
+                // Wait for all product updates to complete.
+                await Promise.all(productUpdates);
+            }
 
             // Sends an email to the user if we haven't sent them one already.
             // This prevents multiple emails if the user reloads the page.

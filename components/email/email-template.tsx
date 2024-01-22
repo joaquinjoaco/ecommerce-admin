@@ -148,7 +148,9 @@ export const EmailTemplate: React.FC<Readonly<EmailTemplateProps>> = ({
                                     <Text className="text-left">{item.name} | {item.color.name} | {item.size.name}</Text>
                                 </Column>
                                 <Column align="right" className="w-1/5">
-                                    <Text className="text-center">1</Text>
+                                    <Text className="text-center">
+                                        {order.orderItems?.find((orderItem: { id: string, orderId: string, productId: string, quantity: number }) => orderItem.productId === item.id)?.quantity || 1}
+                                    </Text>
                                 </Column>
                                 <Column align="right" className="w-1/5">
                                     <Text className="text-right">${Number(item.price)}</Text>

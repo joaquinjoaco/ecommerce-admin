@@ -177,8 +177,9 @@ const OrderView: React.FC<OrderViewProps> = ({
                 <div className="flex-1 space-y-6">
                     <div className="space-y-6 rounded-lg border border-slate-200 px-4 py-6 sm:p-6 lg:col-span-5 lg:mt-4 lg:p-8">
                         <p className="text-md font-bold">Pedido</p>
+                        {/* Order products */}
                         {items.map((item) => (
-                            <OrderProduct key={item.id} data={item} />
+                            <OrderProduct key={item.id} data={item} orderItems={data?.orderItems} />
                         ))}
 
                         <div className="flex flex-row justify-between">

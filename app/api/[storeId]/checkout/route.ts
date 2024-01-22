@@ -41,14 +41,13 @@ export async function POST(
         data: {
             storeId: params.storeId,
             orderItems: {
-                create: productIds.map((productId: string) => ({
+                create: orderData.boughtProducts.map((boughtProduct: { id: string, selectedQuantity: number }) => ({
                     product: {
                         connect: {
-                            id: productId
+                            id: boughtProduct.id
                         }
-                    }
-                    // quantity: product.quantity,
-                    // over here we may be able to manage product quantity :)
+                    },
+                    quantity: boughtProduct.selectedQuantity,
                 }))
             },
 
@@ -116,7 +115,7 @@ export async function POST(
         items: products.map((product) => ({
             id: product.id,
             title: product.name,
-            quantity: 1, // product.quantity
+            quantity: orderData.boughtProducts.find((boughtProduct: { id: string, selectedQuantity: number }) => boughtProduct.id === product.id)?.selectedQuantity || 1,
             unit_price: Number(product.price),
             currency_id: "UYU",
         })),
