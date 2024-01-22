@@ -2,7 +2,7 @@
 
 import { Billboard } from "@prisma/client";
 import * as z from "zod";
-import { Trash } from "lucide-react";
+import { ArrowLeft, Trash } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
@@ -115,19 +115,30 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
                     description={description}
                 />
 
-                {initialData && (
+                <div className="flex gap-x-2">
+                    {/* Back button */}
                     <Button
-                        disabled={loading}
-                        variant="destructive"
+                        disabled={false}
+                        variant="default"
                         size="sm"
-                        onClick={() => setOpen(true)}
+                        onClick={() => router.push(`/${params.storeId}/carteleras/`)}
                         type="button"
                     >
-                        <Trash className="h-4 w-4" />
+                        <ArrowLeft className="h-4 w-4" />
                     </Button>
-                )
+                    {initialData && (
+                        <Button
+                            disabled={loading}
+                            variant="destructive"
+                            size="sm"
+                            onClick={() => setOpen(true)}
+                            type="button"
+                        >
+                            <Trash className="h-4 w-4" />
+                        </Button>
+                    )}
+                </div>
 
-                }
             </div>
             <Separator />
 
