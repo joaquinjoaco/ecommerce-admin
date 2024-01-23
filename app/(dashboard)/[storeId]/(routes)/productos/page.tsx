@@ -11,7 +11,7 @@ const ProductsPage = async ({
 }: {
     params: { storeId: string }
 }) => {
-    // fetch all billboards from the store
+    // fetch all products from the store
     const products = await prismadb.product.findMany({
         where: {
             storeId: params.storeId
@@ -29,6 +29,7 @@ const ProductsPage = async ({
     const formattedProducts: ProductColumn[] = products.map((item) => ({
         id: item.id,
         name: item.name,
+        description: item.description,
         isFeatured: item.isFeatured,
         isArchived: item.isArchived,
         isFeaturedText: item.isFeatured ? "Si" : "No",
@@ -37,6 +38,7 @@ const ProductsPage = async ({
         category: item.category.name,
         size: item.size.name,
         color: item.color.value,
+        colorName: item.color.name,
         createdAt: format(item.createdAt, "MMMM do, yyyy")
     }));
 

@@ -6,10 +6,12 @@ import { CellAction } from "./cell-actions"
 export type ProductColumn = {
     id: string;
     name: string;
+    description: string;
     price: string; // we formatted it into a string.
     size: string;
     category: string;
     color: string;
+    colorName: string;
     isFeatured: boolean;
     isArchived: boolean;
     isFeaturedText: string;
