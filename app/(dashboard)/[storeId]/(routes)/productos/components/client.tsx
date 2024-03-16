@@ -11,7 +11,6 @@ import { DataTable } from "@/components/ui/data-table";
 import { Apilist } from "@/components/ui/api-list";
 
 import { ProductColumn, columns } from "./columns";
-import { Product } from "@prisma/client";
 
 interface ProductClientProps {
     data: ProductColumn[];
@@ -28,7 +27,7 @@ export const ProductClient: React.FC<ProductClientProps> = ({
         // Function to convert an array of objects to a worksheet.
         const sheetFromArrayOfObjects = (arrayOfObjects: any[]) => {
             // Re-format the already formatted data prop to readable values for a human in a worksheet.
-            const formattedArray = data.map((item) => ({
+            const formattedArray = arrayOfObjects.map((item) => ({
                 ID: item.id,
                 Nombre: item.name,
                 Descripcion: item.description,
